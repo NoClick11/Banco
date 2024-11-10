@@ -8,10 +8,10 @@ public class Pessoa {
     private String CPF;
     private String email;
 
-    public Pessoa(String nome, String email, String CPF) {
+    public Pessoa(String nome, String CPF, String email) {
         this.nome = nome;
-        this.email = email;
         this.CPF = CPF;
+        this.email = email;
         contador += 1;
     }
 

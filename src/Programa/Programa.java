@@ -19,11 +19,13 @@ public class Programa {
         System.out.println("***** Selecione uma operação que deseja realizar *****");
         System.out.println("------------------------------------------------------");
         System.out.println("|   Opção 1 - Criar conta   |");
-        System.out.println("|   Opção 2 - Depositar     |");
-        System.out.println("|   Opção 3 - Sacar         |");
-        System.out.println("|   Opção 4 - Transferir    |");
-        System.out.println("|   Opção 5 - Listar        |");
-        System.out.println("|   Opção 6 - Sair          |");
+        System.out.println("|   Opção 2 - Excluir conta |");
+        System.out.println("|   Opção 3 - Depositar     |");
+        System.out.println("|   Opção 4 - Sacar         |");
+        System.out.println("|   Opção 5 - Transferir    |");
+        System.out.println("|   Opção 6 - Listar        |");
+        System.out.println("|   Opção 7 - Buscar conta  |");
+        System.out.println("|   Opção 8 - Sair          |");
 
         int operacao = sc.nextInt();
 
@@ -32,18 +34,24 @@ public class Programa {
                 criarConta();
                 break;
             case 2:
-                depositar();
+                excluirConta();
                 break;
             case 3:
-                sacar();
+                depositar();
                 break;
             case 4:
-                transferir();
+                sacar();
                 break;
             case 5:
-                listarContas();
+                transferir();
                 break;
             case 6:
+                listarContas();
+                break;
+            case 7:
+                buscarContas();
+                break;
+            case 8:
                 System.out.println("Você saiu");
                 System.exit(0);
             default:
@@ -55,11 +63,11 @@ public class Programa {
 
     public static void criarConta() {
 
-        System.out.println("\nNome: ");
+        System.out.println("\nEscreva seu nome: ");
         String nome = sc.next();
-        System.out.println("\nCPF: ");
+        System.out.println("\nEscreva seu CPF: ");
         String cpf = sc.next();
-        System.out.println("\nEmail: ");
+        System.out.println("\nEscreva seu email: ");
         String email = sc.next();
 
         Pessoa pessoa = new Pessoa(nome, cpf, email);
@@ -69,6 +77,17 @@ public class Programa {
         contasBancarias.add(conta);
         System.out.println("Sua conta foi criada com sucesso!");
 
+        operacoes();
+    }
+
+    public static void excluirConta() {
+        System.out.println("\n Qual conta deseja excluir");
+        int contaExcluir = sc.nextInt();
+        for (Conta contaa : contasBancarias) {
+            if (contaa.getNumeroConta() == contaExcluir) {
+                contasBancarias.remove(contaExcluir-1);
+            }
+        }
         operacoes();
     }
 
@@ -144,7 +163,6 @@ public class Programa {
 
     }
 
-
     //listar contas
     public static void listarContas() {
         if(!contasBancarias.isEmpty()) {
@@ -157,4 +175,19 @@ public class Programa {
         operacoes();
     }
 
+    public static void buscarContas() {
+        Conta conta = null;
+        if(!contasBancarias.isEmpty()) {
+            System.out.println("Digite o número da conta");
+            int numeroConta = sc.nextInt();
+            for(Conta contaa : contasBancarias) {
+                if(contaa.getNumeroConta() == numeroConta) {
+                    System.out.println(contaa);
+                }
+            }
+        } else {
+            System.out.println("Esta conta não existe!");
+        }
+        operacoes();
+    }
 }
