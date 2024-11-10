@@ -96,6 +96,7 @@ public class Programa {
         for (Conta contaa : contasBancarias) {
             if (contaa.getNumeroConta() == contaExcluir) {
                 contasBancarias.remove(contaExcluir - 1);  // Remove a conta da lista
+                System.out.println("Conta excluida com sucesso! ");
             }
         }
         operacoes();  // Exibe o menu novamente
