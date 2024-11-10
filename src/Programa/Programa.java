@@ -1,17 +1,18 @@
 package Programa;
-    import java.util.Scanner;
-    import java.util.ArrayList;
+
+import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Programa {
-        static Scanner sc = new Scanner(System.in);
-        static ArrayList<Conta> contasBancarias;
+    static Scanner sc = new Scanner(System.in);
+    static ArrayList<Conta> contasBancarias;
 
     public static void main(String[] args) {
-        contasBancarias = new ArrayList<Conta>();
-        operacoes();
-
+        contasBancarias = new ArrayList<Conta>();  // Inicializa a lista de contas bancárias
+        operacoes();                              // Chama o metodo 'operacoes' para exibir o menu e começar o fluxo
     }
 
+    // Metodo que exibe o menu de operações
     public static void operacoes() {
         System.out.println("------------------------------------------------------");
         System.out.println("-------------Bem vindos a nossa Agência---------------");
@@ -27,8 +28,9 @@ public class Programa {
         System.out.println("|   Opção 7 - Buscar conta  |");
         System.out.println("|   Opção 8 - Sair          |");
 
-        int operacao = sc.nextInt();
+        int operacao = sc.nextInt(); // Captura a escolha do usuário
 
+        // Executa a operação conforme a opção selecionada
         switch (operacao) {
             case 1:
                 criarConta();
@@ -52,8 +54,8 @@ public class Programa {
                 buscarContas();
                 break;
             case 8:
-                System.out.println("Você saiu");
-                System.exit(0);
+                System.out.println("Você saiu"); System.exit(0);
+                break;
             default:
                 System.out.println("Opção inválida!");
                 operacoes();
@@ -61,48 +63,56 @@ public class Programa {
         }
     }
 
+    // Metodo para criar uma nova conta
     public static void criarConta() {
-
         System.out.println("\nEscreva seu nome: ");
         String nome = sc.next();
         System.out.println("\nEscreva seu CPF: ");
         String cpf = sc.next();
         System.out.println("\nEscreva seu email: ");
         String email = sc.next();
+        System.out.println("\nEscreva sua idade: ");
+        int idade = sc.nextInt();
+        System.out.println("\nEscreva sua telefone: ");
+        String telefone = sc.next();
+        System.out.println("\nNivel de escolaridade");
+        String escolaridade = sc.next();
 
-        Pessoa pessoa = new Pessoa(nome, cpf, email);
-
+        // Cria uma nova instância de Pessoa e Conta
+        Pessoa pessoa = new Pessoa(nome, cpf, email, idade, telefone, escolaridade);
         Conta conta = new Conta(pessoa);
 
+        // Adiciona a nova conta à lista de contas
         contasBancarias.add(conta);
         System.out.println("Sua conta foi criada com sucesso!");
 
-        operacoes();
+        operacoes();  // Exibe o menu novamente
     }
 
+    // Metodo para excluir uma conta existente
     public static void excluirConta() {
         System.out.println("\n Qual conta deseja excluir");
-        int contaExcluir = sc.nextInt();
+        int contaExcluir = sc.nextInt();  // Captura o número da conta a ser excluída
         for (Conta contaa : contasBancarias) {
             if (contaa.getNumeroConta() == contaExcluir) {
-                contasBancarias.remove(contaExcluir-1);
+                contasBancarias.remove(contaExcluir - 1);  // Remove a conta da lista
             }
         }
-        operacoes();
+        operacoes();  // Exibe o menu novamente
     }
 
+    // Metodo auxiliar para encontrar uma conta pelo número
     private static Conta encontrarConta(int numeroConta) {
         Conta conta = null;
-        if(!contasBancarias.isEmpty()) {
-            for(Conta contaa : contasBancarias) {
-                if(contaa.getNumeroConta() == numeroConta) {
-                        conta = contaa;
-                }
+        for(Conta contaa : contasBancarias) {
+            if(contaa.getNumeroConta() == numeroConta) {
+                conta = contaa;  // Retorna a conta encontrada
             }
         }
-        return conta;
+        return conta;  // Retorna a conta ou null se não encontrada
     }
 
+    // Metodo para realizar um depósito
     public static void depositar() {
         System.out.println("Número da conta: ");
         int numeroConta = sc.nextInt();
@@ -113,13 +123,13 @@ public class Programa {
             System.out.println("Qual valor deseja depositar: ");
             Double valorDeposito = sc.nextDouble();
             conta.depositar(valorDeposito);
-            System.out.println("Valor depositado com sucesso: ");
         } else {
             System.out.println("Conta não foi encontrada! ");
         }
-        operacoes();
+        operacoes();  // Exibe o menu novamente
     }
 
+    // Metodo para realizar um saque
     public static void sacar() {
         System.out.println("Número da conta: ");
         int numeroConta = sc.nextInt();
@@ -129,65 +139,59 @@ public class Programa {
         if (conta != null) {
             System.out.println("Qual valor deseja sacar: ");
             Double valorSaque = sc.nextDouble();
-
             conta.sacar(valorSaque);
         } else {
             System.out.println("Conta não foi encontrada! ");
         }
-        operacoes();
+        operacoes();  // Exibe o menu novamente
     }
 
+    // Metodo para realizar uma transferência
     public static void transferir() {
         System.out.println("Número da conta do remetente: ");
         int numeroContaRemetente = sc.nextInt();
 
         Conta contaRemetente = encontrarConta(numeroContaRemetente);
-        System.out.println("Número da conta do remetente: ");
+        System.out.println("Número da conta do destinatário");
 
         if (contaRemetente != null) {
-            System.out.println("Número da conta do destinatário");
-            int  numeroContaDestinatario = sc.nextInt();
-
+            int numeroContaDestinatario = sc.nextInt();
             Conta contaDestinatario = encontrarConta(numeroContaDestinatario);
 
             if (contaDestinatario != null) {
                 System.out.println("Valor da transferência: ");
                 Double valor = sc.nextDouble();
-
                 contaRemetente.transferir(contaDestinatario, valor);
-
-
             }
         }
-        operacoes();
-
+        operacoes();  // Exibe o menu novamente
     }
 
-    //listar contas
+    // Metodo para listar todas as contas
     public static void listarContas() {
-        if(!contasBancarias.isEmpty()) {
-            for (Conta conta: contasBancarias) {
+        if (!contasBancarias.isEmpty()) {
+            for (Conta conta : contasBancarias) {
                 System.out.println(conta);
             }
         } else {
             System.out.println("Não há contas cadastradas!");
         }
-        operacoes();
+        operacoes();  // Exibe o menu novamente
     }
 
+    // Metodo para buscar uma conta específica
     public static void buscarContas() {
-        Conta conta = null;
-        if(!contasBancarias.isEmpty()) {
+        if (!contasBancarias.isEmpty()) {
             System.out.println("Digite o número da conta");
             int numeroConta = sc.nextInt();
-            for(Conta contaa : contasBancarias) {
-                if(contaa.getNumeroConta() == numeroConta) {
+            for (Conta contaa : contasBancarias) {
+                if (contaa.getNumeroConta() == numeroConta) {
                     System.out.println(contaa);
                 }
             }
         } else {
             System.out.println("Esta conta não existe!");
         }
-        operacoes();
+        operacoes();  // Exibe o menu novamente
     }
 }
