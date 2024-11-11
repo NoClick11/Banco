@@ -3,7 +3,7 @@ package Programa;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class Programa {
+public abstract class Programa implements OperacoesBancarias {
     static Scanner sc = new Scanner(System.in);
     static ArrayList<Conta> contasBancarias;
 
@@ -91,13 +91,24 @@ public class Programa {
 
     // Metodo para excluir uma conta existente
     public static void excluirConta() {
-        System.out.println("\n Qual conta deseja excluir");
+        System.out.println("\nQual conta deseja excluir:");
         int contaExcluir = sc.nextInt();  // Captura o número da conta a ser excluída
-        for (Conta contaa : contasBancarias) {
-            if (contaa.getNumeroConta() == contaExcluir) {
-                contasBancarias.remove(contaExcluir - 1);  // Remove a conta da lista
-                System.out.println("Conta excluida com sucesso! ");
+        boolean contaEncontrada = false;  // Marca se a conta foi encontrada
+        // Itera sobre a lista de contas para encontrar a conta pelo número
+        for (int i = 0; i < contasBancarias.size(); i++) {
+            Conta conta = contasBancarias.get(i);
+
+            // Verifica se o número da conta coincide
+            if (conta.getNumeroConta() == contaExcluir) {
+                contasBancarias.remove(i);  // Remove a conta da lista pelo índice
+                contaEncontrada = true;
+                System.out.println("Conta excluída com sucesso!");
+                break;
             }
+        }
+        // Caso a conta não tenha sido encontrada, informa ao usuário
+        if (!contaEncontrada) {
+            System.out.println("Conta não encontrada!");
         }
         operacoes();  // Exibe o menu novamente
     }
@@ -164,6 +175,8 @@ public class Programa {
                 Double valor = sc.nextDouble();
                 contaRemetente.transferir(contaDestinatario, valor);
             }
+        } else {
+            System.out.println("Conta não encontra! ");
         }
         operacoes();  // Exibe o menu novamente
     }
