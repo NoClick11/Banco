@@ -77,15 +77,22 @@ public abstract class Programa implements OperacoesBancarias {
         String telefone = sc.next();
         System.out.println("\nNivel de escolaridade");
         String escolaridade = sc.next();
-
+        System.out.println("Tipo de conta: 1-Conta Corrente | 2-Conta Poupança");
+        int tipo = sc.nextInt();
         // Cria uma nova instância de Pessoa e Conta
-        Pessoa pessoa = new Pessoa(nome, cpf, email, idade, telefone, escolaridade);
-        Conta conta = new Conta(pessoa);
+        Pessoa pessoa = new Pessoa(nome, cpf, email, idade, telefone, escolaridade, tipo);
+        Conta conta;
+        if (tipo == 1) {
+            conta = new ContaCorrente(pessoa);
+        } else if (tipo == 2) {
+            conta = new ContaPoupanca(pessoa);
+        } else {
+            System.out.println("Tipo inválido!");
+            return;
+        }
 
-        // Adiciona a nova conta à lista de contas
         contasBancarias.add(conta);
-        System.out.println("Sua conta foi criada com sucesso!");
-
+        System.out.println("Conta criada com sucesso!");
         operacoes();  // Exibe o menu novamente
     }
 

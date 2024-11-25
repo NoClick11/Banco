@@ -16,9 +16,10 @@ public class Pessoa {
     private String telefone;
     private String escolaridade;
     private Date CriacaoConta;
+    private int tipo;
 
     // Construtor da classe Pessoa, inicializa os atributos com os valores fornecidos e incrementa o contador
-    public Pessoa(String nome, String CPF, String email, int idade, String telefone, String escolaridade) {
+    public Pessoa(String nome, String CPF, String email, int idade, String telefone, String escolaridade, int tipo) {
         this.nome = nome;
         this.CPF = CPF;
         this.email = email;
@@ -26,6 +27,7 @@ public class Pessoa {
         this.telefone = telefone;
         this.escolaridade = escolaridade;
         this.CriacaoConta = new Date();
+        this.tipo = tipo;
         contador += 1;  // Incrementa o contador cada vez que um novo objeto Pessoa é criado
     }
 
@@ -82,4 +84,11 @@ public class Pessoa {
         return this.CriacaoConta;
     }
 
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
 }

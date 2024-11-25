@@ -57,6 +57,7 @@ public class Conta {
     // Metodo toString para exibir as informações da conta de forma legível
     public String toString() {
         return "\nNumero da conta: " + this.getNumeroConta() +
+                "\nTipo da conta: " + this.pessoa.getTipo() +
                 "\nNome: " + this.pessoa.getNome() +
                 "\nCPF: " + this.pessoa.getCPF() +
                 "\nEmail: " + this.pessoa.getEmail() +
